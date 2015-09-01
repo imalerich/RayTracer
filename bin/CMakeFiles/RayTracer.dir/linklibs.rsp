@@ -1,0 +1,1 @@
+ lib/glfw-3.1.1/src/libglfw3.a -lopengl32 -lglu32 -lgdi32 -lglu32 -lopengl32 C:/Users/ianma/Development/RayTracer/src/lib/glew/lib/libglew32.dll.a -lgdi32 C:/Users/ianma/Development/RayTracer/src/lib/glew/lib/libglew32.dll.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

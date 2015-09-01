@@ -1,0 +1,5 @@
+// the configured options and settings
+#define RayTracer_VERSION_MAJOR @RayTracer_VERSION_MAJOR@
+#define RayTracer_VERSION_MINOR @RayTracer_VERSION_MINOR@
+
+#define GLEW_STATIC
