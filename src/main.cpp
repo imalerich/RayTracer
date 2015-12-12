@@ -2,12 +2,16 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <math.h>
 
 #include "glutil.h"
 #include "raytracer.h"
 #include "io/fileloader.h"
 #include "buffers/VertexBuffer.h"
 #include "buffers/ElementBuffer.h"
+
+#include "sphere.h"
+#include "vector.h"
 
 using namespace std;
 
@@ -44,9 +48,11 @@ int main() {
 	glBindTexture(GL_TEXTURE_2D, tex);
 
 	RayTracer rt(SCREENW, SCREENH);
-	float * pixels = rt.render_scene();
+	float * pixels = rt.render_scene(Vector(3.0, 0.0, 0.0));
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW, SCREENH, 0, GL_RGB, GL_FLOAT, pixels);
+	delete[] pixels;
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -96,6 +102,8 @@ int main() {
 	GLint texAttrib = glGetAttribLocation(shaderProgram, "texcoord"); // TexCoords
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
+
+	double time = 0.0;
 
 	// game loop
 	while (!glfwWindowShouldClose(window)) {

@@ -9,7 +9,7 @@ using namespace std;
 class Sphere {
 public:
 	Sphere();
-	Sphere(Vector Origin, double Radius);
+	Sphere(Vector Center, double Radius);
 	friend ostream& operator<<(ostream &os, const  Sphere &sphere);
 
 	/**
@@ -24,7 +24,7 @@ public:
 	 */
 	unsigned intersects(Vector &start, Vector &dir, Vector &location);
 
-	Vector origin; /**< Origin of the sphere. */
+	Vector center; /**< Center of the sphere. */
 	double radius; /**< Radius of the sphere. */
 };
 

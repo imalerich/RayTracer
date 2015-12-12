@@ -17,6 +17,13 @@ public:
 	friend ostream& operator<<(ostream &os, const Vector &vector);
 
 	/**
+	 * \return The magnitude of thie Vector.
+	 */
+	inline double magnitude() {
+		return distance(Vector());
+	}
+
+	/**
 	 * Performs the dot product on this Vector and
 	 * and the input 'other' Vector.
 	 * \param other Other Vector to take the dot product with.
