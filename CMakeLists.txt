@@ -7,7 +7,7 @@ set (RayTracer_VERSION_MAJOR 0)
 set (RayTracer_VERSION_MINOR 1)
 
 # Set compiler and linker flags for gcc
-set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11")
+set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11 -lm")
 set (GCC_COVERAGE_LINK_FLAGS		"-static-libgcc -static-libstdc++")
 
 set (CMAKE_CXX_FLAGS 				"${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
@@ -30,6 +30,10 @@ include_directories(
 add_executable(RayTracer
 	src/main.cpp
 	src/glutil.cpp
+
+	src/raytracer.cpp
+	src/sphere.cpp
+	src/vector.cpp
 
 	src/io/fileloader.cpp
 	src/buffers/VertexBuffer.cpp

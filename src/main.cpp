@@ -1,10 +1,10 @@
 #include "prefix.h"
 
 #include <iostream>
-#include <cstdlib>
 #include <stdio.h>
 
 #include "glutil.h"
+#include "raytracer.h"
 #include "io/fileloader.h"
 #include "buffers/VertexBuffer.h"
 #include "buffers/ElementBuffer.h"
@@ -43,12 +43,8 @@ int main() {
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
 
-	float * pixels = new float[SCREENW*SCREENH*3];
-	for (int i=0; i<(SCREENW*SCREENH * 3); i += 3) {
-		pixels[i + 0] = (rand() % 1000) / 10000.0f;
-		pixels[i + 1] = pixels[i];
-		pixels[i + 2] = pixels[i];
-	}
+	RayTracer rt(SCREENW, SCREENH);
+	float * pixels = rt.render_scene();
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW, SCREENH, 0, GL_RGB, GL_FLOAT, pixels);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

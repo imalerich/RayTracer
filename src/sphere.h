@@ -1,14 +1,30 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "point.h"
+#include <iostream>
+#include "vector.h"
+
+using namespace std;
 
 class Sphere {
 public:
 	Sphere();
-	Sphere(Point Origin, double Radius);
+	Sphere(Vector Origin, double Radius);
+	friend ostream& operator<<(ostream &os, const  Sphere &sphere);
 
-	Point origin; /**< Origin of the sphere. */
+	/**
+	 * Determins whether or not this Sphere intersects the input
+	 * line (determined by the start coordinate and  direction vector).
+	 * If an intersection occurs, the location of the intersection
+	 * is stored in the 'location' parameter.
+	 * \param start Start coordinate of the line.
+	 * \param dir Direction vector of the line.
+	 * \param location (return) The point of intersection.
+	 * \return How many intersections occured (0, 1, or 2).
+	 */
+	unsigned intersects(Vector &start, Vector &dir, Vector &location);
+
+	Vector origin; /**< Origin of the sphere. */
 	double radius; /**< Radius of the sphere. */
 };
 
