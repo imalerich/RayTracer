@@ -9,6 +9,8 @@
 #include "buffers/VertexBuffer.h"
 #include "buffers/ElementBuffer.h"
 
+using namespace std;
+
 float vertices[] = {
 	//Position     Color        	  TexCoords
 	-1.0f,  1.0f,  1.0f, 1.0f, 1.0f,  0.0f, 0.0f,		// Top-left
@@ -55,8 +57,8 @@ int main() {
 
 	// define our shaders
 	char buffer[512];
-	const char * fragmentSource = openFile("simple.fs");
-	const char * vertexSource = openFile("simple.vs");
+	const char * fragmentSource = openFile("../assets/simple.fs");
+	const char * vertexSource = openFile("../assets/simple.vs");
 
 	// create our vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);

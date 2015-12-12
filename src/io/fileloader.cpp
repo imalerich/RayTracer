@@ -21,6 +21,8 @@ char * openFile(const char * filename) {
         buffer[size] = '\0';
 
         return buffer;
+    } else {
+        cerr << "failed to open file: " << filename << endl;
     }
 
     return nullptr;
