@@ -7,8 +7,8 @@ set (RayTracer_VERSION_MAJOR 0)
 set (RayTracer_VERSION_MINOR 1)
 
 # Set compiler and linker flags for gcc
-set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11 -lm")
-set (GCC_COVERAGE_LINK_FLAGS		"-static-libgcc -static-libstdc++")
+set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11")
+set (GCC_COVERAGE_LINK_FLAGS		"-static-libgcc -static-libstdc++ -lm")
 
 set (CMAKE_CXX_FLAGS 				"${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 set (CMAKE_EXE_LINKER_FLAGS  		"${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
@@ -32,6 +32,7 @@ add_executable(RayTracer
 	src/glutil.cpp
 
 	src/raytracer.cpp
+	src/camera.cpp
 	src/sphere.cpp
 	src/vector.cpp
 

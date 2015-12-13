@@ -1,17 +1,14 @@
+#include <algorithm>
 #include <math.h>
 #include <stdlib.h>
 #include "sphere.h"
 
 using namespace std;
 
-Sphere::Sphere() {
-	radius = 1.0;
-}
+Sphere::Sphere() : radius{1.0} { }
 
-Sphere::Sphere(Vector Center, double Radius) {
-	center = Center;
-	radius = Radius;
-}
+Sphere::Sphere(Vector Center, double Radius) : 
+	center{Center}, radius{Radius} { }
 
 ostream& operator<<(ostream &os, const  Sphere &sphere) {
 	os << "(Center: " << sphere.center << ", Radius: " << sphere.radius << ")";
@@ -19,24 +16,37 @@ ostream& operator<<(ostream &os, const  Sphere &sphere) {
 }
 
 unsigned Sphere::intersects(Vector &start, Vector &dir, Vector &location) {
+	const static auto epsilon = 0.00000000001;
 	auto a = pow(dir.magnitude(), 2);
 	auto b = 2.0 * (start.dot(dir) - dir.dot(center));
-	auto c = pow((center - start).magnitude(), 2) - pow(radius, 2);
+	auto c = pow((Vector(center) - start).magnitude(), 2) - pow(radius, 2);
 	auto delta = pow(b, 2) - (4 * a * c);
 
 	// Return the number of intersections.
-	if (delta < 0 || a == 0) {
+	if (delta < -epsilon || a == 0) {
 		return 0;
 	} else {
-		auto d = delta == 0 ? (-b / 2 * a) : (-b - sqrt(delta)) / (2 * a);
-		location.x = start.x + d * dir.x;
-		location.y = start.y + d * dir.y;
-		location.z = start.z + d * dir.z;
+		// if delta is 0
+		auto d = -(b + sqrt(delta)) / (2 * a);
 
-		if (d < 0) {
-			return 0;
+		// if delta is positive
+		if (abs(delta) > epsilon) {
+			auto d0 = (-b - sqrt(delta)) / (2 * a);
+			auto d1 = (-b + sqrt(delta)) / (2 * a);
+
+			// if one is negative, grab the larger one
+			// if both are positive, grab the smaller one
+			d = (d0 < epsilon) || (d1 < epsilon) ? max(d0, d1) : min(d0, d1);
 		}
 
-		return d == 0 ? 1 : 2;
+		if (d > epsilon) {
+			location.x = start.x + d * dir.x;
+			location.y = start.y + d * dir.y;
+			location.z = start.z + d * dir.z;
+
+			return abs(d) < epsilon ? 1 : 2;
+		} else {
+			return 0;
+		}
 	}
 }

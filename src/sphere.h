@@ -24,8 +24,8 @@ public:
 	 */
 	unsigned intersects(Vector &start, Vector &dir, Vector &location);
 
-	Vector center; /**< Center of the sphere. */
-	double radius; /**< Radius of the sphere. */
+	const Vector center; /**< Center of the sphere. */
+	const double radius; /**< Radius of the sphere. */
 };
 
 #endif

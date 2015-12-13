@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <iostream>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -21,6 +22,27 @@ public:
 	 */
 	inline double magnitude() {
 		return distance(Vector());
+	}
+
+	/**
+	 * Normalizes this vector, such that it's magnitude will be 1.
+	 */
+	inline void normalize() {
+		auto m = magnitude();
+		x /= m;
+		y /= m;
+		z /= m;
+	}
+
+	/**
+	 * Tests for equality of two Vectors.
+	 * Returns 'true' if both Vectors reside at the 
+	 * same point in space.
+	 */
+	inline bool operator==(const Vector &other) {
+		// const static auto epsilon = pow(2, -52);
+		const static auto epsilon = 0.00000000001;
+		return abs(x - other.x) < epsilon && abs(y - other.y) < epsilon && abs(z - other.z) < epsilon;
 	}
 
 	/**

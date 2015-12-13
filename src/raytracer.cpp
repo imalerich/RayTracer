@@ -15,9 +15,10 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 		: screen_w{Screen_W}, screen_h{Screen_H} { }
 
 float * RayTracer::render_scene(Vector light) {
+	Camera cam(0.5, 90.0, (double)screen_w / (double)screen_h);
 	Pixel * pixels = new Pixel[screen_w * screen_h];
-	Vector dir(Vector(0.0, 1.0, 0.0));
-	Sphere s(Vector(0.0, 2.0, 0.0), 0.2);
+	Sphere s(Vector(0.0, 0.4, 0.0), 0.2);
+	Vector start;
 
 	auto height = 1.0;
 	auto width = height * aspect_ratio();
@@ -25,7 +26,7 @@ float * RayTracer::render_scene(Vector light) {
 	for (auto y = 0; y < screen_h; y++) {
 		for (auto x = 0; x < screen_w; x++) {
 			// create the light ray for this pixel
-			Vector start(width * (x / (double)screen_w) - (width / 2.0), 0.0, height * (y / (double)screen_h) - (height / 2.0));
+			Vector dir = cam.ray_for_coord(Vector(x, 0.0, y), Vector(screen_w, 0.0, screen_h));
 			Vector intersect;
 
 			if (s.intersects(start, dir, intersect)) {
@@ -38,7 +39,7 @@ float * RayTracer::render_scene(Vector light) {
 				}
 
 			} else {
-				pixels[y * screen_w + x] = { 0.1, 0.1, 0.1 };
+				pixels[y * screen_w + x] = { 135/255.0, 206/255.0, 235/255.0 };
 			}
 		}
 	}

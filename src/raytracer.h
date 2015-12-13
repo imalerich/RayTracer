@@ -2,6 +2,7 @@
 #define RAYTRACER_H
 
 #include "vector.h"
+#include "camera.h"
 
 class RayTracer {
 public:
