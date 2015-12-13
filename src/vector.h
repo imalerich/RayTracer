@@ -35,6 +35,26 @@ public:
 	}
 
 	/**
+	 * Utility for setting each value of this Vector.
+	 * \param X The new x value for this vector.
+	 * \param Y The new y value for this vector.
+	 * \param Z The new z value for this vector.
+	 */
+	inline void set(double X, double Y, double Z) {
+		x = X;
+		y = Y;
+		z = Z;
+	}
+
+	/**
+	 * Utility for setting each value of this Vector.
+	 * \param other Vector match.
+	 */
+	inline void set(Vector other) {
+		set(other.x, other.y , other.z);
+	}
+
+	/**
 	 * Tests for equality of two Vectors.
 	 * Returns 'true' if both Vectors reside at the 
 	 * same point in space.

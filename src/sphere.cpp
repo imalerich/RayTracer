@@ -15,7 +15,7 @@ ostream& operator<<(ostream &os, const  Sphere &sphere) {
 	return os;
 }
 
-unsigned Sphere::intersects(Vector &start, Vector &dir, Vector &location) {
+bool Sphere::intersects(Vector start, Vector dir, Vector &location, Vector &normal) {
 	const static auto epsilon = 0.00000000001;
 	auto a = pow(dir.magnitude(), 2);
 	auto b = 2.0 * (start.dot(dir) - dir.dot(center));
@@ -24,7 +24,7 @@ unsigned Sphere::intersects(Vector &start, Vector &dir, Vector &location) {
 
 	// Return the number of intersections.
 	if (delta < -epsilon || a == 0) {
-		return 0;
+		return false;
 	} else {
 		// if delta is 0
 		auto d = -(b + sqrt(delta)) / (2 * a);
@@ -40,13 +40,14 @@ unsigned Sphere::intersects(Vector &start, Vector &dir, Vector &location) {
 		}
 
 		if (d > epsilon) {
-			location.x = start.x + d * dir.x;
-			location.y = start.y + d * dir.y;
-			location.z = start.z + d * dir.z;
+			location.set(start.x + d * dir.x, start.y + d * dir.y , start.z + d * dir.z);
+			normal.set(location - center);
+			normal.normalize();
 
-			return abs(d) < epsilon ? 1 : 2;
+			return true;
+			
 		} else {
-			return 0;
+			return false;
 		}
 	}
 }
