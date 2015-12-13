@@ -50,7 +50,7 @@ int main() {
 	glBindTexture(GL_TEXTURE_2D, tex);
 
 	RayTracer rt(SCREENW, SCREENH);
-	float * pixels = rt.render_scene(Vector(2.0, 2.0, 0.0));
+	float * pixels = rt.render_scene(Vector(1.5, 1.5, 0.0));
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW, SCREENH, 0, GL_RGB, GL_FLOAT, pixels);
 	delete[] pixels;
@@ -111,13 +111,6 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-		time += 1/6.0;
-		Vector light(100 * sin(time), 100 * cos(time), 0.0);
-		Vector o(0.0, 2.0, 0.0);
-		float * pixels = rt.render_scene(light + o);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW, SCREENH, 0, GL_RGB, GL_FLOAT, pixels);
-		delete[] pixels;
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

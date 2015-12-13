@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "camera.h"
 
 Camera::Camera(double Near, double FoV, double ARatio) : 
@@ -6,6 +8,8 @@ Camera::Camera(double Near, double FoV, double ARatio) :
 Vector Camera::ray_for_coord(Vector coord, Vector dimm) {
 	auto xperc = coord.x / dimm.x;
 	auto zperc = coord.z / dimm.z;
+	auto width = 2 * near_dist * sin(fov/2);
+	auto height = width / aratio;
 
-	return Vector(-(aratio / 2.0) + (xperc * aratio), near_dist, 0.5 - zperc);
+	return Vector(-(width / 2.0) + (xperc * width), near_dist, (height / 2.0) - (zperc * height));
 }

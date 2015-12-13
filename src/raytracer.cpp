@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include <math.h>
+
 #include "raytracer.h"
 #include "vector.h"
 #include "sphere.h"
@@ -15,9 +17,9 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 		: screen_w{Screen_W}, screen_h{Screen_H} { }
 
 float * RayTracer::render_scene(Vector light) {
-	Camera cam(0.5, 90.0, (double)screen_w / (double)screen_h);
+	Camera cam(1.0, M_PI/2.0, (double)screen_w / (double)screen_h);
 	Pixel * pixels = new Pixel[screen_w * screen_h];
-	Sphere s(Vector(0.0, 0.4, 0.0), 0.2);
+	Sphere s(Vector(0.0, 3.0, 0.0), 1.0);
 	Vector start;
 
 	auto height = 1.0;
