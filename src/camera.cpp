@@ -1,5 +1,3 @@
-#include <math.h>
-
 #include "camera.h"
 
 Camera::Camera(double Near, double FoV, double ARatio) : 

@@ -4,6 +4,12 @@
 #include "vector.h"
 #include "camera.h"
 
+struct Pixel {
+	float r;
+	float g;
+	float b;
+};
+
 class RayTracer {
 public:
 	RayTracer(unsigned Screen_W, unsigned Screen_H);
@@ -19,8 +25,18 @@ public:
 	}
 
 private:
+	/**
+	 * Performs all necessary ray tracing to generate the color at the given point.
+	 * The result will be stored in the input data array.
+	 * \param x X coordinate in pixels.
+	 * \param y Y coordinate in pixels.
+	 * \param data Data array to store the resulting color into.
+	 */
+	void render_point(unsigned x, unsigned y, Pixel * pixels, Vector light);
+
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
+	unsigned pixels_rendered;
 };
 
 #endif

@@ -51,7 +51,9 @@ public:
 	 * \param other Vector match.
 	 */
 	inline void set(Vector other) {
-		set(other.x, other.y , other.z);
+		x = other.x;
+		y = other.y;
+		z = other.z;
 	}
 
 	/**

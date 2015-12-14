@@ -1,10 +1,14 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 #include "vector.h"
 
 class Camera {
 public:
+	Camera() : near_dist{1.0}, fov{M_PI/2.0}, aratio{1.0} { }
 	Camera(double Near, double FoV, double ARatio);
 
 	/**

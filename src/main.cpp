@@ -105,8 +105,6 @@ int main() {
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
 
-	double time = 1.0;
-
 	// game loop
 	while (!glfwWindowShouldClose(window)) {
 		glfwSwapBuffers(window);
