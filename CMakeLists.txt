@@ -42,14 +42,29 @@ add_executable(RayTracer
 )
 
 # Include additional libraries
-target_link_libraries(RayTracer 
-	${PROJECT_SOURCE_DIR}/lib/glfw/lib-mingw/libglfw3.a
-	${PROJECT_SOURCE_DIR}/lib/glew/lib/libglew32.a
-	opengl32
-	${OPENGL_glu_LIBRARY}
-	glu32
-	gdi32
-)
+
+IF (WIN32 AND MINGW) 
+
+	target_link_libraries(RayTracer 
+		${PROJECT_SOURCE_DIR}/lib/glfw/lib-mingw/libglfw3.a
+		${PROJECT_SOURCE_DIR}/lib/glew/lib/libglew32.a
+		opengl32
+		${OPENGL_glu_LIBRARY}
+		glu32
+		gdi32
+	)
+
+ELSEIF (UNIX AND NOT MINGW)
+
+	target_link_libraries(RayTracer 
+		glfw
+		glew
+		GL
+		GLU
+		glut
+	)
+
+ENDIF()
 
 # add the install targets
 install (TARGETS RayTracer DESTINATION bin)
