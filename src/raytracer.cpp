@@ -21,8 +21,6 @@ float * RayTracer::render_scene(Vector light) {
 		}
 	}
 
-	while (pixels_rendered < screen_w * screen_h) { }
-
 	return (float *)pixels;
 }
 
@@ -32,17 +30,17 @@ void RayTracer::render_point(unsigned x, unsigned y, Pixel * pixels, Vector ligh
 
 	// create the light ray for this pixel
 	Vector dir = cam.ray_for_coord(Vector(x, 0.0, y), Vector(screen_w, 0.0, screen_h));
+	Vector norm;
 	Vector intersect;
 
-	if (s.intersects(cam.get_pos(), dir, intersect)) {
+	if (s.intersects(cam.get_pos(), dir, intersect, norm)) {
 		Vector color(61/255.0, 102/255.0, 70/255.0);
 		Vector dir = light - intersect;
-		Vector norm;
 		dir.normalize();
 
 		auto l = 0.2; // ambient
-		if (!s.intersects(intersect, dir, intersect, norm)) {
-			l = min(1.0, abs(Vector(0.0, 1.0, 0.0).dot(dir)) + l);
+		if (!s.intersects(intersect, dir, intersect)) {
+			l = min(1.0, max(norm.dot(dir), 0.0) + l);
 		}
 
 		color = color * l;

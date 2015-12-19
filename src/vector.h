@@ -110,6 +110,12 @@ public:
 	Vector operator-(const Vector &other);
 
 	/**
+	 * Produces the opposite of this Vector.
+	 * \return The resulting Vector value.
+	 */
+	Vector operator-();
+
+	/**
 	 * Scales each value of this Vector with
 	 * the corresponding value in the input Vector.
 	 * \param other Other Vector to scale this Vector by.

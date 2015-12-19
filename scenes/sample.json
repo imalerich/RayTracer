@@ -1,0 +1,11 @@
+{
+	"lights" : [
+		{
+			"type" : "point",
+		}
+	],
+
+	"objects" : [
+		//
+	]
+}
