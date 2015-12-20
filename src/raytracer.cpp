@@ -13,13 +13,21 @@
 
 using namespace std;
 
+const static unsigned reflections = 2;
+
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 8;
-	for (auto x = 0; x < count; x++) {
-		for (auto y = 0; y < count; y++) {
-			surfaces.push_back(new Sphere(Vector((x - count/2.0) * 2.0, 10.0, (y - count/2.0) * 2.0), 1.0));
+	auto count = 3;
+	auto i = 10;
+	auto depth = 3;
+	for (; i < 10 + depth * 2; i += 2) {
+		for (auto x = 0; x < count; x++) {
+			for (auto y = 0; y < count; y++) {
+				auto x_coord = (x * 2.0 - count + 1);
+				auto y_coord = (y * 2.0 - count + 1);
+				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
+			}
 		}
 	}
 
@@ -63,7 +71,7 @@ void RayTracer::render_point(unsigned x, unsigned y, Pixel * pixels) {
 	Vector start = cam.get_pos();
 	Vector dir = cam.ray_for_coord(Vector(x, 0.0, y), Vector(screen_w, 0.0, screen_h));
 
-	Vector c = color_for_ray(start, dir, 3);
+	Vector c = color_for_ray(start, dir, reflections);
 	pixels[y * screen_w + x] = { (float)c.x, (float)c.y, (float)c.z };
 
 	pixels_rendered++;
@@ -97,8 +105,8 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 			auto l_val = 0.2; // ambient
 
 			for (auto l : lights) {
-				auto light = true;
 				Vector dir = l->direction_from_point(intersect);
+				auto light = true;
 
 				// check if a shadow hits this surface
 				for (auto k : surfaces) {
@@ -113,9 +121,33 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 				}
 			}
 
-			l_val = min(l_val, 1.0);
+			auto specular = 0.0;
+			for (auto l : lights) {
+				Vector l_dir = l->direction_from_point(intersect);
+				auto light = true;
+				
+				// check if this light is visible
+				for (auto k : surfaces) {
+					if (k->intersects(intersect, l_dir)) {
+						light = false;
+						break;
+					}
+				}
 
-			color = (s->diffuse * l_val);
+				if (light) {
+					norm.normalize();
+
+					auto reflect = 2.0 * l_dir.dot(norm);
+					Vector p_dir = l_dir - norm * reflect;
+					auto phong = max(p_dir.dot(dir), 0.0);
+					specular += pow(phong, 32);
+				}
+			}
+
+			l_val = min(l_val, 1.0);
+			specular = max(specular, 1.0);
+
+			color = (s->diffuse * l_val) * specular;
 			drawn = true;
 
 		} else if (!drawn) {

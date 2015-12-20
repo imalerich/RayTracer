@@ -27,6 +27,5 @@ double PointLight::scalar_for_point(Vector point, Vector normal) {
 		return 0.0;
 	}
 
-	//return i * l_val * intensity;
-	return l_val;
+	return i * l_val * intensity;
 }

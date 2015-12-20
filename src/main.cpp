@@ -36,7 +36,7 @@ GLuint elements[] = {
 const static auto sampling = 2;
 
 int main() {
-	//srand(time(NULL));
+	srand(time(NULL));
 	
 	if (!initWindow("RayTracer")) {
 		return -1;
@@ -55,12 +55,12 @@ int main() {
 	glGenTextures(1, &tex);
 	glBindTexture(GL_TEXTURE_2D, tex);
 
+	time_t start = time(NULL);
 	RayTracer rt(SCREENW * sampling, SCREENH * sampling);
 	float * pixels = rt.render_scene();
 
-	double start = time(NULL);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW * sampling, SCREENH * sampling, 0, GL_RGB, GL_FLOAT, pixels);
-	double length = time(NULL) - start;
+	double length = difftime(time(NULL), start);
 	cerr << "rendering: " << length << " seconds" << endl;
 	delete[] pixels;
 
