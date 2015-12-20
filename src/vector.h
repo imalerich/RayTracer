@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <math.h>
 
 using namespace std;
 
@@ -64,7 +65,7 @@ public:
 	inline bool operator==(const Vector &other) {
 		// const static auto epsilon = pow(2, -52);
 		const static auto epsilon = 0.00000000001;
-		return abs(x - other.x) < epsilon && abs(y - other.y) < epsilon && abs(z - other.z) < epsilon;
+		return fabs(x - other.x) < epsilon && fabs(y - other.y) < epsilon && fabs(z - other.z) < epsilon;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "plane.h"
 
@@ -16,7 +16,7 @@ bool Plane::intersects(Vector start, Vector dir, Vector &location, Vector &norma
 	normal.set(norm);
 
 	// the plane and vector are parallel
-	if (abs(dir.dot(norm)) < epsilon) {
+	if (fabs(dir.dot(norm)) < epsilon) {
 		return false;
 	}
 

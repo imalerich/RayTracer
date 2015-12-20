@@ -62,9 +62,13 @@ ELSEIF (UNIX AND NOT MINGW)
 
 	target_link_libraries(RayTracer 
 		glfw
-		glew
+		GLEW
 		GL
 		GLU
+		X11
+		Xxf86vm
+		Xrandr
+		Xi
 		glut
 	)
 

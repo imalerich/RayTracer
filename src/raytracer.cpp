@@ -16,22 +16,20 @@ using namespace std;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	surfaces.push_back(new Sphere(Vector(0.0, 3.0, 0.0), 1.0));
-	surfaces.push_back(new Sphere(Vector(-1.5, 4.0, 0.0), 0.6));
-	surfaces.push_back(new Sphere(Vector(2.0, 5.0, -0.2), 0.8));
-	surfaces.push_back(new Sphere(Vector(4.0, 6.0, 2.0), 1.2));
-	surfaces.push_back(new Sphere(Vector(3.0, 13.0, 2.4), 1.5));
-
-	surfaces.push_back(new Plane(Vector(0.0, 0.0, -0.8), Vector(0.0, 0.0, 1.0)));
+	auto count = 8;
+	for (auto x = 0; x < count; x++) {
+		for (auto y = 0; y < count; y++) {
+			surfaces.push_back(new Sphere(Vector((x - count/2.0) * 2.0, 10.0, (y - count/2.0) * 2.0), 1.0));
+		}
+	}
 
 	for (auto s : surfaces) {
 		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
-		s->reflection = (rand() % 100) / 1000.0;
+		s->reflection = (rand() % 800) / 1000.0;
 	}
 
 	// add some sample lights
-	lights.push_back(new PointLight(Vector(3.0, 1.0, 3.0), 1.0, 30.0));
-	//lights.push_back(new PointLight(Vector(-4.0, 1.0, 2.0), 0.2, 30.0));
+	lights.push_back(new PointLight(Vector(0.0, 8.0, 0.0), 1.0, 30.0));
 }
 
 RayTracer::~RayTracer() {
@@ -64,7 +62,7 @@ void RayTracer::render_point(unsigned x, unsigned y, Pixel * pixels) {
 	Vector start = cam.get_pos();
 	Vector dir = cam.ray_for_coord(Vector(x, 0.0, y), Vector(screen_w, 0.0, screen_h));
 
-	Vector c = color_for_ray(start, dir, 5);
+	Vector c = color_for_ray(start, dir, 3);
 	pixels[y * screen_w + x] = { (float)c.x, (float)c.y, (float)c.z };
 
 	pixels_rendered++;
@@ -119,7 +117,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 			drawn = true;
 
 		} else if (!drawn) {
-			color = Vector(135/255.0, 206/255.0, 235/255.0);
+			color = Vector(1.0, 1.0, 1.0);
 		}
 	}
 

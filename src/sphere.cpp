@@ -1,6 +1,6 @@
 #include <algorithm>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include "sphere.h"
 
@@ -31,7 +31,7 @@ bool Sphere::intersects(Vector start, Vector dir, Vector &location, Vector &norm
 		auto d = -(b + sqrt(delta)) / (2 * a);
 
 		// if delta is positive
-		if (abs(delta) > epsilon) {
+		if (fabs(delta) > epsilon) {
 			auto d0 = (-b - sqrt(delta)) / (2 * a);
 			auto d1 = (-b + sqrt(delta)) / (2 * a);
 
