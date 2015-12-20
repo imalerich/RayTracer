@@ -5,7 +5,9 @@
 
 #include "vector.h"
 #include "camera.h"
+
 #include "surface.h"
+#include "lights/light.h"
 
 using namespace std;
 
@@ -24,7 +26,7 @@ public:
 	 * Renders the input scene and returns a buffer representing 
 	 * the image to the caller.
 	 */
-	float * render_scene(Vector light);
+	float * render_scene();
 
 	inline double aspect_ratio() {
 		return (double)screen_w / (double)screen_h;
@@ -38,15 +40,16 @@ private:
 	 * \param y Y coordinate in pixels.
 	 * \param data Data array to store the resulting color into.
 	 */
-	void render_point(unsigned x, unsigned y, Pixel * pixels, Vector light);
+	void render_point(unsigned x, unsigned y, Pixel * pixels);
 
-	Vector color_for_ray(Vector start, Vector dir, Vector light, int limit);
+	Vector color_for_ray(Vector start, Vector dir, int limit);
 
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
 	unsigned pixels_rendered;
 
 	vector<Surface *> surfaces;
+	vector<Light *> lights;
 };
 
 #endif

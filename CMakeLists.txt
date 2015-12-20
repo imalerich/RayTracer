@@ -33,9 +33,12 @@ add_executable(RayTracer
 
 	src/raytracer.cpp
 	src/camera.cpp
+	src/vector.cpp
+
+	src/lights/pointlight.cpp
+
 	src/sphere.cpp
 	src/plane.cpp
-	src/vector.cpp
 
 	src/io/fileloader.cpp
 	src/buffers/VertexBuffer.cpp

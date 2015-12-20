@@ -33,7 +33,7 @@ GLuint elements[] = {
     2, 3, 0
 };
 
-const static auto sampling = 1;
+const static auto sampling = 2;
 
 int main() {
 	srand(time(NULL));
@@ -56,7 +56,7 @@ int main() {
 	glBindTexture(GL_TEXTURE_2D, tex);
 
 	RayTracer rt(SCREENW * sampling, SCREENH * sampling);
-	float * pixels = rt.render_scene(Vector(3.0, 1.5, 8.0));
+	float * pixels = rt.render_scene();
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, SCREENW * sampling, SCREENH * sampling, 0, GL_RGB, GL_FLOAT, pixels);
 	delete[] pixels;
