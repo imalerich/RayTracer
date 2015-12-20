@@ -7,7 +7,7 @@ set (RayTracer_VERSION_MAJOR 0)
 set (RayTracer_VERSION_MINOR 1)
 
 # Set compiler and linker flags for gcc
-set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11 -Wall -g")
+set (GCC_COVERAGE_COMPILE_FLAGS 	"-std=c++11 -Wall -g -fopenmp")
 set (GCC_COVERAGE_LINK_FLAGS		"-static-libgcc -static-libstdc++ -lm")
 
 set (CMAKE_CXX_FLAGS 				"${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")

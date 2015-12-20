@@ -20,7 +20,7 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	// add some sample surfaces
 	auto count = 3;
 	auto i = 10;
-	auto depth = 3;
+	auto depth = 6;
 	for (; i < 10 + depth * 2; i += 2) {
 		for (auto x = 0; x < count; x++) {
 			for (auto y = 0; y < count; y++) {
@@ -55,7 +55,8 @@ float * RayTracer::render_scene() {
 	Pixel * pixels = new Pixel[screen_w * screen_h];
 	pixels_rendered = 0;
 
-	for (auto y = 0u; y < screen_h; y++) {
+	#pragma omp parallel for
+	for (auto y = 0u; y < screen_h; y++) {	
 		for (auto x = 0u; x < screen_w; x++) {
 			render_point(x, y, pixels);
 		}
