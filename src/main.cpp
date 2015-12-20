@@ -4,7 +4,9 @@
 
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #include "glutil.h"
 #include "raytracer.h"
@@ -31,9 +33,11 @@ GLuint elements[] = {
     2, 3, 0
 };
 
-const static auto sampling = 2;
+const static auto sampling = 1;
 
 int main() {
+	srand(time(NULL));
+	
 	if (!initWindow("RayTracer")) {
 		return -1;
 	}
@@ -63,8 +67,8 @@ int main() {
 
 	// define our shaders
 	char buffer[512];
-	const char * fragmentSource = openFile("assets/simple.fs");
-	const char * vertexSource = openFile("assets/simple.vs");
+	const char * fragmentSource = openFile("../assets/simple.fs");
+	const char * vertexSource = openFile("../assets/simple.vs");
 
 	// create our vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);

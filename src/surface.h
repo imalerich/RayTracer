@@ -7,7 +7,8 @@ class Surface {
 public:
 	virtual ~Surface() { }
 
-	Vector color;
+	Vector diffuse; /**< Diffuse color of the surface. */
+	double reflection; /**< Reflection index of the surface. */
 
 	/**
 	 * Determins whether or not this Surface intersects the input

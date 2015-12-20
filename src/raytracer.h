@@ -40,6 +40,8 @@ private:
 	 */
 	void render_point(unsigned x, unsigned y, Pixel * pixels, Vector light);
 
+	Vector color_for_ray(Vector start, Vector dir, Vector light, int limit);
+
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
 	unsigned pixels_rendered;

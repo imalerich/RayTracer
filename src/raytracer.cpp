@@ -13,12 +13,21 @@ using namespace std;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	surfaces.push_back(new Sphere(Vector(0.0, 3.0, 0.0), 1.0));
-	surfaces.push_back(new Sphere(Vector(-1.5, 4.0, 0.0), 1.0));
-	surfaces.push_back(new Sphere(Vector(1.5, 5.0, 0.0), 1.0));
-	surfaces.push_back(new Plane(Vector(0.0, 0.0, -1.0), Vector(0.0, 0.0, 1.0)));
+	surfaces.push_back(new Sphere(Vector(-1.5, 4.0, 0.0), 0.6));
+	surfaces.push_back(new Sphere(Vector(2.0, 5.0, -0.2), 0.8));
+	surfaces.push_back(new Sphere(Vector(4.0, 8.0, 2.0), 1.2));
+	surfaces.push_back(new Sphere(Vector(3.0, 13.0, 2.4), 1.5));
+
+	surfaces.push_back(new Sphere(Vector(0.4, -2.0, 0.0), 1.4));
+	surfaces.push_back(new Sphere(Vector(2.5, -3.0, 0.0), 2.0));
+	surfaces.push_back(new Sphere(Vector(-2.0, -4.0, 0.5), 3.0));
+
+	surfaces.push_back(new Plane(Vector(0.0, 0.0, -0.8), Vector(0.0, 0.0, 1.0)));
 
 	for (auto s : surfaces) {
-		s->color = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
+		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
+		s->reflection = (rand() % 250) / 1000.0;
+		//s->reflection = 0.0;
 	}
 }
 
@@ -45,18 +54,36 @@ void RayTracer::render_point(unsigned x, unsigned y, Pixel * pixels, Vector ligh
 	Camera cam(1.0, M_PI/2.0, (double)screen_w / (double)screen_h);
 
 	// create the light ray for this pixel
+	Vector start = cam.get_pos();
 	Vector dir = cam.ray_for_coord(Vector(x, 0.0, y), Vector(screen_w, 0.0, screen_h));
+
+	Vector c = color_for_ray(start, dir, light, 5);
+	pixels[y * screen_w + x] = { (float)c.x, (float)c.y, (float)c.z };
+
+	pixels_rendered++;
+}
+
+Vector RayTracer::color_for_ray(Vector start, Vector dir, Vector light, int limit) {
+	Vector color;
 	Vector norm;
 	Vector intersect;
 	auto dist = DBL_MAX;
 	auto drawn = false;
 
+	Surface * hit = nullptr;
+	Vector hit_i, hit_n;
+
 	for (auto s : surfaces) {
-		if (s->intersects(cam.get_pos(), dir, intersect, norm)) {
+		if (s->intersects(start, dir, intersect, norm)) {
 			// make sure this point is closer than the last renedered point
 			if (intersect.magnitude() > dist) {
 				continue;
 			} else {
+				// keep track of the surface we hit
+				hit = s;
+				hit_i = intersect;
+				hit_n = norm;
+
 				dist = intersect.magnitude();
 			}
 
@@ -78,13 +105,19 @@ void RayTracer::render_point(unsigned x, unsigned y, Pixel * pixels, Vector ligh
 				l = min(1.0, max(norm.dot(dir), 0.0) + l);
 			}
 
-			pixels[y * screen_w + x] = { l * (float)s->color.x, l * (float)s->color.y, l * (float)s->color.z };
+			color = (s->diffuse * l);
 			drawn = true;
 
 		} else if (!drawn) {
-			pixels[y * screen_w + x] = { 0.0, 0.0, 0.0 };
+			color = Vector(135/255.0, 206/255.0, 235/255.0);
 		}
 	}
 
-	pixels_rendered++;
+	if (hit && hit->reflection && limit) {
+		double reflect = 2.0 * dir.dot(hit_n);
+		Vector r = color_for_ray(hit_i, dir - hit_n * reflect, light, limit - 1);
+		return (r * hit->reflection) + (color * (1.0 - hit->reflection));
+	}
+
+	return color;
 }
