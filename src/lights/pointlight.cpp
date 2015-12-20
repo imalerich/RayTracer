@@ -15,12 +15,18 @@ double PointLight::scalar_for_point(Vector point, Vector normal) {
 	}
 
 	auto dir = pos - point;
+	auto dist = dir.magnitude();
+
+	normal.normalize();
+	dir.normalize();
+
+	auto i = 1.0 - (dist / range);
 	auto l_val = normal.dot(dir);
-	auto i = 1.0 - (dir.magnitude() / range);
 
 	if (i < 0.0) {
 		return 0.0;
 	}
 
-	return i * l_val * intensity;
+	//return i * l_val * intensity;
+	return l_val;
 }

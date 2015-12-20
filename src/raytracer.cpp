@@ -29,7 +29,8 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	}
 
 	// add some sample lights
-	lights.push_back(new PointLight(Vector(0.0, 8.0, 0.0), 1.0, 30.0));
+	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
+	lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
 }
 
 RayTracer::~RayTracer() {
@@ -72,6 +73,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 	Vector color;
 	Vector norm;
 	Vector intersect;
+
 	auto dist = DBL_MAX;
 	auto drawn = false;
 
@@ -100,7 +102,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 
 				// check if a shadow hits this surface
 				for (auto k : surfaces) {
-					if (k->intersects(intersect, dir, intersect)) {
+					if (k->intersects(intersect, dir)) {
 						light = false;
 						break;
 					}
@@ -121,7 +123,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 		}
 	}
 
-	if (hit && hit->reflection && limit) {
+	if (hit && hit->reflection > 0.0 && limit) {
 		double reflect = 2.0 * dir.dot(hit_n);
 		Vector r = color_for_ray(hit_i, dir - hit_n * reflect, limit - 1);
 		return (r * hit->reflection) + (color * (1.0 - hit->reflection));
