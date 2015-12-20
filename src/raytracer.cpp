@@ -6,8 +6,8 @@
 #include "raytracer.h"
 #include "vector.h"
 
-#include "sphere.h"
-#include "plane.h"
+#include "surfaces/sphere.h"
+#include "surfaces/plane.h"
 
 #include "lights/pointlight.h"
 

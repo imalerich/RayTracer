@@ -14,7 +14,6 @@
 #include "buffers/VertexBuffer.h"
 #include "buffers/ElementBuffer.h"
 
-#include "sphere.h"
 #include "vector.h"
 
 using namespace std;

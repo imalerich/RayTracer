@@ -1,16 +1,13 @@
-#ifndef SPHERE_H
-#define SPHERE_H
+#ifndef PLANE_H
+#define PLANE_H
 
-#include "vector.h"
+#include "../vector.h"
 #include "surface.h"
 
-using namespace std;
-
-class Sphere : public Surface {
+class Plane : public Surface {
 public:
-	Sphere();
-	Sphere(Vector Center, double Radius);
-	friend ostream& operator<<(ostream &os, const  Sphere &sphere);
+	Plane(Vector Coord, Vector Norm);
+	friend ostream& operator<<(ostream &os, const Plane &plane);
 
 	virtual bool intersects(Vector start, Vector dir, Vector &location, Vector &normal);
 	
@@ -24,8 +21,8 @@ public:
 		return intersects(start, dir, location, norm);
 	}
 
-	const Vector center; /**< Center of the sphere. */
-	const double radius; /**< Radius of the sphere. */
+	Vector coord; /**< A Coordinate on the plane. */
+	const Vector norm; /**< Normal vector of the plane. */
 };
 
 #endif

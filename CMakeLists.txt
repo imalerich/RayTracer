@@ -37,8 +37,8 @@ add_executable(RayTracer
 
 	src/lights/pointlight.cpp
 
-	src/sphere.cpp
-	src/plane.cpp
+	src/surfaces/sphere.cpp
+	src/surfaces/plane.cpp
 
 	src/io/fileloader.cpp
 	src/buffers/VertexBuffer.cpp

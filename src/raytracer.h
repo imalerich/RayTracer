@@ -6,7 +6,7 @@
 #include "vector.h"
 #include "camera.h"
 
-#include "surface.h"
+#include "surfaces/surface.h"
 #include "lights/light.h"
 
 using namespace std;
