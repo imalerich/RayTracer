@@ -2,10 +2,35 @@
 	"lights" : [
 		{
 			"type" : "point",
+			"intensity" : 1.0,
+			"range" : 6.0,
+			"position" : [
+				3.0,
+				1.5,
+				0.0
+			],
+			"color" : [
+				1.0,
+				1.0,
+				1.0
+			]
 		}
 	],
 
 	"objects" : [
-		//
+		{
+			"type" : "sphere",
+			"radius" : 1.0,
+			"position" : [
+				0.0,
+				3.0,
+				0.0
+			],
+			"color" : [
+				135.0,
+				206.0,
+				235.0
+			]
+		}
 	]
 }

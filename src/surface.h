@@ -7,6 +7,8 @@ class Surface {
 public:
 	virtual ~Surface() { }
 
+	Vector color;
+
 	/**
 	 * Determins whether or not this Surface intersects the input
 	 * line (determined by the start coordinate and  direction vector).

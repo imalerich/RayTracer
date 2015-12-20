@@ -34,6 +34,7 @@ add_executable(RayTracer
 	src/raytracer.cpp
 	src/camera.cpp
 	src/sphere.cpp
+	src/plane.cpp
 	src/vector.cpp
 
 	src/io/fileloader.cpp

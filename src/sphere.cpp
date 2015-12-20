@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <math.h>
 #include <stdlib.h>
+
 #include "sphere.h"
 
 using namespace std;

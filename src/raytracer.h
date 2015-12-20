@@ -1,8 +1,13 @@
 #ifndef RAYTRACER_H
 #define RAYTRACER_H
 
+#include <vector>
+
 #include "vector.h"
 #include "camera.h"
+#include "surface.h"
+
+using namespace std;
 
 struct Pixel {
 	float r;
@@ -13,6 +18,7 @@ struct Pixel {
 class RayTracer {
 public:
 	RayTracer(unsigned Screen_W, unsigned Screen_H);
+	~RayTracer();
 
 	/**
 	 * Renders the input scene and returns a buffer representing 
@@ -37,6 +43,8 @@ private:
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
 	unsigned pixels_rendered;
+
+	vector<Surface *> surfaces;
 };
 
 #endif
