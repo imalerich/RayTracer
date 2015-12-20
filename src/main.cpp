@@ -31,7 +31,7 @@ GLuint elements[] = {
     2, 3, 0
 };
 
-const static auto sampling = 2;
+const static auto sampling = 1;
 
 int main() {
 	if (!initWindow("RayTracer")) {
