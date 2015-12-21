@@ -18,7 +18,7 @@ const static unsigned reflections = 3;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 3;
+	auto count = 5;
 	auto i = 10;
 	auto depth = 3;
 	for (; i < 10 + depth * 2; i += 2) {
