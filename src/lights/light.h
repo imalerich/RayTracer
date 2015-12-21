@@ -3,6 +3,11 @@
 
 #include "../math/vector.h"
 
+/**
+ * Interface for a light.
+ * Defines the necessary methods a class must adhere to be
+ * used as a light when it comes to rendering a scene.
+ */
 class Light {
 public:
 	virtual ~Light() { }

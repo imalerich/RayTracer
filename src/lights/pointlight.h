@@ -3,6 +3,13 @@
 
 #include "light.h"
 
+/**
+ * A simple Point Light.
+ * This light has a position in space.
+ * An intensity (within the range (0.0, 1.0)),
+ * and a range. This lights intensity will be 
+ * scaled linearly across its range.
+ */
 class PointLight : public Light {
 public:
 	PointLight(Vector Pos, double Intensity, double Range);

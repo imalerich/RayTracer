@@ -36,12 +36,14 @@ add_executable(RayTracer
 	src/camera.cpp
 
 	src/math/vector.cpp
+	src/math/aabbox.cpp
 
 	src/lights/pointlight.cpp
 	src/lights/dirlight.cpp
 
 	src/surfaces/sphere.cpp
 	src/surfaces/plane.cpp
+	src/surfaces/aacube.cpp
 
 	src/io/fileloader.cpp
 	src/buffers/VertexBuffer.cpp

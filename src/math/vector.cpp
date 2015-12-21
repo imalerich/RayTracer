@@ -23,7 +23,7 @@ double Vector::dot(const Vector &other) {
 	return x * other.x + y * other.y + z * other.z;
 }
 
-double Vector::distance(const Vector &other) {
+double Vector::distance(const Vector &other) const {
 	return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2) + pow(z - other.z, 2));
 }
 
@@ -51,6 +51,22 @@ Vector Vector::operator*(const Vector &other) {
 	return Vector(x * other.x, y * other.y, z * other.z);
 }
 
+Vector Vector::operator/(const Vector &other) {
+	return Vector(x / other.x, y / other.y, z / other.z);
+}
+
 Vector Vector::operator*(double scalar) {
 	return Vector(x * scalar, y * scalar, z * scalar);
+}
+
+Vector Vector::min(const Vector &a, const Vector &b) {
+	auto ma = a.magnitude();
+	auto mb = b.magnitude();
+	return ma < mb ? a : b;
+}
+
+Vector Vector::max(const Vector &a, const Vector &b) {
+	auto ma = a.magnitude();
+	auto mb = b.magnitude();
+	return ma > mb ? a : b;
 }

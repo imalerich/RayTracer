@@ -7,6 +7,7 @@
 
 #include "surfaces/sphere.h"
 #include "surfaces/plane.h"
+#include "surfaces/aacube.h"
 
 #include "lights/pointlight.h"
 #include "lights/dirlight.h"
@@ -18,27 +19,30 @@ const static unsigned reflections = 3;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 5;
-	auto i = 10;
-	auto depth = 3;
-	for (; i < 10 + depth * 2; i += 2) {
-		for (auto x = 0; x < count; x++) {
-			for (auto y = 0; y < count; y++) {
-				auto x_coord = (x * 2.0 - count + 1);
-				auto y_coord = (y * 2.0 - count + 1);
-				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
-			}
-		}
-	}
+//	auto count = 5;
+//	auto i = 10;
+//	auto depth = 3;
+//	for (; i < 10 + depth * 2; i += 2) {
+//		for (auto x = 0; x < count; x++) {
+//			for (auto y = 0; y < count; y++) {
+//				auto x_coord = (x * 2.0 - count + 1);
+//				auto y_coord = (y * 2.0 - count + 1);
+//				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
+//			}
+//		}
+//	}
+
+	surfaces.push_back(new AACube(Vector(-1, 2, -1), Vector(1, 3, 1)));
 
 	for (auto s : surfaces) {
 		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
-		s->reflection = (rand() % 800) / 1000.0;
+		//s->reflection = (rand() % 800) / 1000.0;
+		s->reflection = 0.0;
 	}
 
 	// add some sample lights
-	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
-	lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
+	//lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
+	//lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
 	lights.push_back(new DirLight(Vector(0.0, 1.0, 0.0), 1.0));
 }
 

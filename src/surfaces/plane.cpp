@@ -11,6 +11,7 @@ ostream& operator<<(ostream &os, const Plane &plane) {
 	os << "(Coord: " << plane. coord << ", Normal: " << plane.norm << ")";
 	return os;
 }
+
 bool Plane::intersects(Vector start, Vector dir, Vector &location, Vector &normal) {
 	const static auto epsilon = 0.00000000000001;
 	normal.set(norm);

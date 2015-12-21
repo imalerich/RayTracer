@@ -3,6 +3,14 @@
 
 #include "light.h"
 
+/**
+ * A simple Directional Light.
+ * This light only has a static direction
+ * and an intensity. Lighting is determined only by 
+ * visibility and alignment of the surface normal 
+ * vector with this lights direction (scaled
+ * by the intensity).
+ */
 class DirLight : public Light {
 public:
 	DirLight(Vector Dir, double Intensity);

@@ -5,6 +5,12 @@
 
 using namespace std;
 
+/**
+ * A Sphere Surface.
+ * This Surface has a center location
+ * and is the collection of all points with
+ * a distance of 'radius' from that center location.
+ */
 class Sphere : public Surface {
 public:
 	Sphere();
@@ -23,6 +29,7 @@ public:
 		return intersects(start, dir, location, norm);
 	}
 
+private:
 	const Vector center; /**< Center of the sphere. */
 	const double radius; /**< Radius of the sphere. */
 };

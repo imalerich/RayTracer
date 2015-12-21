@@ -3,6 +3,13 @@
 
 #include "../math/vector.h"
 
+/**
+ * Interface for a Surface. A Surface defines
+ * an intersection test with a Ray and itself,
+ * and can provide the location of intersection
+ * allong with the normal Vector of that intersection
+ * location.
+ */
 class Surface {
 public:
 	virtual ~Surface() { }
