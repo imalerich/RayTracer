@@ -8,7 +8,8 @@
 using namespace std;
 
 /**
- * Representation of a single Vector in 3d space.  * The starting coordinate of the Vector is assumed * to be the origin.
+ * Representation of a single Vector in 3d space.  
+ * The starting coordinate of the Vector is assumed * to be the origin.
  */
 class Vector {
 public:
@@ -73,7 +74,7 @@ public:
 	 * Returns 'true' if both Vectors reside at the 
 	 * same point in space.
 	 */
-	inline bool operator==(const Vector &other) {
+	inline bool operator==(const Vector &other) const {
 		// const static auto epsilon = pow(2, -52);
 		const static auto epsilon = 0.00000000001;
 		return fabs(x - other.x) < epsilon && fabs(y - other.y) < epsilon && fabs(z - other.z) < epsilon;
@@ -84,7 +85,7 @@ public:
 	 * 	left of, below, and behind
 	 * the other vector.
 	 */
-	inline bool operator<(const Vector &other) {
+	inline bool operator<(const Vector &other) const {
 		return x < other.x && y < other.y && z < other.z;
 	}
 
@@ -93,7 +94,7 @@ public:
 	 *  right of, above, and infront of
 	 * the other vector.
 	 */
-	inline bool operator>(const Vector &other) {
+	inline bool operator>(const Vector &other) const {
 		return x > other.x && y > other.y && z > other.z;
 	}
 
@@ -103,7 +104,7 @@ public:
 	 * \param other Other Vector to take the dot product with.
 	 * \return Resulting scalar value.
 	 */
-	 double dot(const Vector &other);
+	 double dot(const Vector &other) const;
 
 	 /**
 	  * Takes the cross product of this Vector and the
@@ -111,7 +112,7 @@ public:
 	  * \param other Other Vector take the corss product with.
 	  * \return Resulting Vector.
 	  */
-	 Vector cross(const Vector &other);
+	 Vector cross(const Vector &other) const;
 
 	/**
 	 * Computes the distance between this Vector and the
@@ -128,7 +129,7 @@ public:
 	 * \param other Other Vector to add to this Vector.
 	 * \return The resulting Vector value.
 	 */
-	Vector operator+(const Vector &other);
+	Vector operator+(const Vector &other) const;
 
 	/**
 	 * Produces a new Vector whos values are the
@@ -137,13 +138,13 @@ public:
 	 * \param other Other Vector to subtract from this Vector.
 	 * \return The resulting Vector value.
 	 */
-	Vector operator-(const Vector &other);
+	Vector operator-(const Vector &other) const;
 
 	/**
 	 * Produces the opposite of this Vector.
 	 * \return The resulting Vector value.
 	 */
-	Vector operator-();
+	Vector operator-() const;
 
 	/**
 	 * Scales each component of this Vector with
@@ -151,7 +152,7 @@ public:
 	 * \param other Other Vector to scale this Vector by.
 	 * \return The resulting Vector.
 	 */
-	Vector operator*(const Vector &other);
+	Vector operator*(const Vector &other) const;
 
 	/*
 	 * Scales each component of this Vector
@@ -160,7 +161,7 @@ public:
 	 * \param other Other Vector to divide this Vector by.
 	 * \return The resulting Vector.
 	 */
-	Vector operator/(const Vector &other);
+	Vector operator/(const Vector &other) const;
 
 	/**
 	 * Scales each coordinate value of this object
@@ -168,14 +169,14 @@ public:
 	 * \Vector scalar Scalar to apply to this Vector.
 	 * \return The resulting Vector value.
 	 */
-	Vector operator*(double scalar);
+	Vector operator*(double scalar) const;
 
 	/**
 	 * Convenience method for accessing this
 	 * Vectors components.
 	 * \return (0: x, 1: y, 2: z, else: 0.0)
 	 */
-	inline double operator[](int index) {
+	inline double& operator[](int index) {
 		switch (index) {
 			case 0:
 				return x;
@@ -184,7 +185,7 @@ public:
 			case 2:
 				return z;
 			default:
-				return 0.0;
+				throw invalid_argument("Vector::operator[]");
 		}
 	}
 

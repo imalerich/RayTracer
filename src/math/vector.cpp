@@ -19,7 +19,7 @@ ostream& operator<<(ostream &os, const Vector &vector) {
 	return os;
 }
 
-double Vector::dot(const Vector &other) {
+double Vector::dot(const Vector &other) const {
 	return x * other.x + y * other.y + z * other.z;
 }
 
@@ -27,7 +27,7 @@ double Vector::distance(const Vector &other) const {
 	return sqrt(pow(x - other.x, 2) + pow(y - other.y, 2) + pow(z - other.z, 2));
 }
 
-Vector Vector::cross(const Vector &other) {
+Vector Vector::cross(const Vector &other) const {
 	auto X = y * other.z + z * other.y;
 	auto Y = z * other.x + x * other.z;
 	auto Z = x * other.y + y * other.x;
@@ -35,27 +35,27 @@ Vector Vector::cross(const Vector &other) {
 	return Vector(X, Y, Z);
 }
 
-Vector Vector::operator+(const Vector &other) {
+Vector Vector::operator+(const Vector &other) const {
 	return Vector(x + other.x, y + other.y, z + other.z);
 }
 
-Vector Vector::operator-(const Vector &other) {
+Vector Vector::operator-(const Vector &other) const {
 	return Vector(x - other.x, y - other.y, z - other.z);
 }
 
-Vector Vector::operator-() {
+Vector Vector::operator-() const {
 	return Vector(-x, -y, -z);
 }
 
-Vector Vector::operator*(const Vector &other) {
+Vector Vector::operator*(const Vector &other) const{
 	return Vector(x * other.x, y * other.y, z * other.z);
 }
 
-Vector Vector::operator/(const Vector &other) {
+Vector Vector::operator/(const Vector &other) const {
 	return Vector(x / other.x, y / other.y, z / other.z);
 }
 
-Vector Vector::operator*(double scalar) {
+Vector Vector::operator*(double scalar) const {
 	return Vector(x * scalar, y * scalar, z * scalar);
 }
 

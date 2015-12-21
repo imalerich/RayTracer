@@ -1,5 +1,6 @@
 #include <exception>
 #include <algorithm>
+#include <float.h>
 #include "aacube.h"
 
 using namespace std;
@@ -18,28 +19,22 @@ ostream& operator<<(ostream &os, const AACube &cube) {
 
 bool AACube::intersects(Vector start, Vector dir, Vector &location, Vector &normal) {
 	const static auto epsilon = 0.00000000000001;
-	Vector d_min(start);
-	Vector d_max(start);
+	Vector d_min(-DBL_MAX, -DBL_MAX, -DBL_MAX);
+	Vector d_max(DBL_MAX, DBL_MAX, DBL_MAX);
 
-	if (dir.x != 0.0) {
-		d_min.x = (min.x - start.x) / dir.x;
-		d_max.x = (max.x - start.x) / dir.x;
-	} else if (min.x > start.x || max.x < start.x) {
-		return false;
+	for (int i=0; i<3; i++) {
+		if (fabs(dir[i]) > epsilon) {
+			d_min[i] = (min[i] - start[i]) / dir[i];
+			d_max[i] = (max[i] - start[i]) / dir[i];
+		} else if (min[i] > start[i] || max[i] < start[i]) {
+			return false;
+		}
 	}
 
-	if (dir.y != 0.0) {
-		d_min.y = (min.y - start.y) / dir.y;
-		d_max.y = (max.y - start.y) / dir.y;
-	} else if (min.y > start.y || max.y < start.y) {
-		return false;
-	}
-
-	if (dir.z != 0.0) {
-		d_min.z = (min.z - start.z) / dir.z;
-		d_max.z = (max.z - start.z) / dir.z;
-	} else if (min.z > start.z || max.z < start.z) {
-		return false;
+	for (int i=0; i<3; i++) {
+		if (dir[i] < -epsilon) {
+			swap(d_min[i], d_max[i]);
+		}
 	}
 
 	auto min_delta = fmax(fmax(d_min.x, d_min.y), d_min.z);
@@ -61,5 +56,5 @@ bool AACube::intersects(Vector start, Vector dir, Vector &location, Vector &norm
 		normal.set(0.0, 0.0, 1.0);
 	}
 
-	return (max_delta >= min_delta) && (min_delta > -epsilon);
+	return (max_delta - min_delta > -epsilon) && (min_delta > -epsilon);
 }

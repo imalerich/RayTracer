@@ -19,22 +19,18 @@ const static unsigned reflections = 3;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-//	auto count = 5;
-//	auto i = 10;
-//	auto depth = 3;
-//	for (; i < 10 + depth * 2; i += 2) {
-//		for (auto x = 0; x < count; x++) {
-//			for (auto y = 0; y < count; y++) {
-//				auto x_coord = (x * 2.0 - count + 1);
-//				auto y_coord = (y * 2.0 - count + 1);
-//				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
-//			}
-//		}
-//	}
-
-	Vector max(1.6, 3.5, 0.5);
-	surfaces.push_back(new AACube(Vector(max.x - 1, max.y - 1, max.z - 1), max));
-	surfaces.push_back(new Sphere(Vector(0.0, 3.0, 0.0), 0.5));
+	auto count = 3;
+	auto i = 10;
+	auto depth = 3;
+	for (; i < 10 + depth * 2; i += 2) {
+		for (auto x = 0; x < count; x++) {
+			for (auto y = 0; y < count; y++) {
+				auto x_coord = (x * 2.0 - count + 1);
+				auto y_coord = (y * 2.0 - count + 1);
+				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
+			}
+		}
+	}
 
 	for (auto s : surfaces) {
 		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
