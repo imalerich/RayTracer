@@ -32,18 +32,19 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 //		}
 //	}
 
-	surfaces.push_back(new AACube(Vector(-1, 2, -1), Vector(1, 3, 1)));
+	Vector max(1.6, 3.5, 0.5);
+	surfaces.push_back(new AACube(Vector(max.x - 1, max.y - 1, max.z - 1), max));
+	surfaces.push_back(new Sphere(Vector(0.0, 3.0, 0.0), 0.5));
 
 	for (auto s : surfaces) {
 		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
-		//s->reflection = (rand() % 800) / 1000.0;
-		s->reflection = 0.0;
+		s->reflection = (rand() % 800) / 1000.0;
 	}
 
 	// add some sample lights
 	//lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
 	//lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
-	lights.push_back(new DirLight(Vector(0.0, 1.0, 0.0), 1.0));
+	lights.push_back(new PointLight(Vector(-3.0, 2.0, 0.0), 1.0, 30.0));
 }
 
 RayTracer::~RayTracer() {

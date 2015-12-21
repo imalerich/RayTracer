@@ -8,9 +8,7 @@
 using namespace std;
 
 /**
- * Representation of a single Vector in 3d space.
- * The starting coordinate of the Vector is assumed
- * to be the origin.
+ * Representation of a single Vector in 3d space.  * The starting coordinate of the Vector is assumed * to be the origin.
  */
 class Vector {
 public:
@@ -171,6 +169,24 @@ public:
 	 * \return The resulting Vector value.
 	 */
 	Vector operator*(double scalar);
+
+	/**
+	 * Convenience method for accessing this
+	 * Vectors components.
+	 * \return (0: x, 1: y, 2: z, else: 0.0)
+	 */
+	inline double operator[](int index) {
+		switch (index) {
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			default:
+				return 0.0;
+		}
+	}
 
 	double x; /**< Coordinate along the x axis. */
 	double y; /**< Coordinate along the y axis. */

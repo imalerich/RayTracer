@@ -8,7 +8,7 @@ Plane::Plane(Vector Coord, Vector Norm) :
 	coord{Coord}, norm{Norm} { }
 
 ostream& operator<<(ostream &os, const Plane &plane) {
-	os << "(Coord: " << plane. coord << ", Normal: " << plane.norm << ")";
+	os << "(Coord: " << plane.coord << ", Normal: " << plane.norm << ")";
 	return os;
 }
 
