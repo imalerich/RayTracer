@@ -24,6 +24,7 @@ include_directories(
 	"${PROJECT_BINARY_DIR}"
 	"${PROJECT_SOURCE_DIR}/lib/glfw/include"
 	"${PROJECT_SOURCE_DIR}/lib/glew/include"
+	"${PROJECT_SOURCE_DIR}/lib/SOIL/include"
 )
 
 # Add the executable
@@ -50,6 +51,7 @@ add_executable(RayTracer
 IF (WIN32 AND MINGW) 
 
 	target_link_libraries(RayTracer 
+		${PROJECT_SOURCE_DIR}/lib/SOIL/lib/libSOIL.a
 		${PROJECT_SOURCE_DIR}/lib/glfw/lib-mingw/libglfw3.a
 		${PROJECT_SOURCE_DIR}/lib/glew/lib/libglew32.a
 		opengl32
@@ -61,6 +63,7 @@ IF (WIN32 AND MINGW)
 ELSEIF (UNIX AND NOT MINGW)
 
 	target_link_libraries(RayTracer 
+		soil
 		glfw
 		GLEW
 		GL

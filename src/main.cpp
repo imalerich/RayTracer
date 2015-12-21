@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <SOIL.h>
 
 #include "glutil.h"
 #include "raytracer.h"
@@ -113,6 +114,9 @@ int main() {
 	glEnableVertexAttribArray(texAttrib);
 	glVertexAttribPointer(texAttrib, 2, GL_FLOAT, GL_FALSE, 7*sizeof(float), (void*)(5*sizeof(float)));
 
+	glfwSwapBuffers(window);
+	glfwPollEvents();
+
 	// game loop
 	while (!glfwWindowShouldClose(window)) {
 		glfwSwapBuffers(window);
@@ -126,6 +130,10 @@ int main() {
 
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 			glfwSetWindowShouldClose(window, GL_TRUE);
+		}
+
+		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+			SOIL_save_screenshot("../scrot.bmp", SOIL_SAVE_TYPE_BMP, 0, 0, SCREENW, SCREENH);
 		}
 	}
 
