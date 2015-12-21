@@ -69,8 +69,8 @@ int main() {
 
 	// define our shaders
 	char buffer[512];
-	const char * fragmentSource = openFile("../assets/simple.fs");
-	const char * vertexSource = openFile("../assets/simple.vs");
+	const char * fragmentSource = openFile("assets/simple.fs");
+	const char * vertexSource = openFile("assets/simple.vs");
 
 	// create our vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);

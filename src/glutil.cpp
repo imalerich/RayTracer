@@ -1,8 +1,8 @@
 #include "glutil.h"
 
 GLFWwindow * window;
-unsigned SCREENW = 800;
-unsigned SCREENH = 600;
+unsigned SCREENW = 3820;
+unsigned SCREENH = 2160;
 
 bool initWindow(const char * windowName) {
 	if (!glfwInit()) {
