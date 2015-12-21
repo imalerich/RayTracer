@@ -4,12 +4,12 @@
 #include <float.h>
 
 #include "raytracer.h"
-#include "vector.h"
 
 #include "surfaces/sphere.h"
 #include "surfaces/plane.h"
 
 #include "lights/pointlight.h"
+#include "lights/dirlight.h"
 
 using namespace std;
 
@@ -39,6 +39,7 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	// add some sample lights
 	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
 	lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
+	lights.push_back(new DirLight(Vector(0.0, 1.0, 0.0), 1.0));
 }
 
 RayTracer::~RayTracer() {

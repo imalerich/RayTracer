@@ -1,7 +1,6 @@
 #ifndef PLANE_H
 #define PLANE_H
 
-#include "../vector.h"
 #include "surface.h"
 
 class Plane : public Surface {

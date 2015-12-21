@@ -1,7 +1,7 @@
 #ifndef I_SURFACE
 #define I_SURFACE
 
-#include "../vector.h"
+#include "../math/vector.h"
 
 class Surface {
 public:

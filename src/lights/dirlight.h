@@ -1,19 +1,18 @@
-#ifndef POINT_LIGHT_H
-#define POINT_LIGHT_H
+#ifndef DIR_LIGHT_H
+#define DIR_LIGHT_H
 
 #include "light.h"
 
-class PointLight : public Light {
+class DirLight : public Light {
 public:
-	PointLight(Vector Pos, double Intensity, double Range);
+	DirLight(Vector Dir, double Intensity);
 
 	virtual Vector direction_from_point(Vector point);
 	virtual double scalar_for_point(Vector point, Vector normal);
 
 private:
 	double intensity;
-	double range;
-	Vector pos;
+	Vector dir;
 };
 
 #endif

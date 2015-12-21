@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "vector.h"
+#include "math/vector.h"
 #include "camera.h"
 
 #include "surfaces/surface.h"

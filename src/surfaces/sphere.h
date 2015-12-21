@@ -1,7 +1,6 @@
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include "../vector.h"
 #include "surface.h"
 
 using namespace std;

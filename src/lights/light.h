@@ -1,7 +1,7 @@
 #ifndef I_LIGHT_H
 #define I_LIGHT_H
 
-#include "../vector.h"
+#include "../math/vector.h"
 
 class Light {
 public:

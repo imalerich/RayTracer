@@ -4,7 +4,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-#include "vector.h"
+#include "math/vector.h"
 
 class Camera {
 public:
