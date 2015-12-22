@@ -2,6 +2,7 @@
 #define VECTOR_H
 
 #include <iostream>
+#include <stdexcept>
 #include <stdlib.h>
 #include <math.h>
 
