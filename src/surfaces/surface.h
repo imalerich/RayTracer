@@ -2,6 +2,7 @@
 #define I_SURFACE
 
 #include "../math/vector.h"
+#include "../math/aabbox.h"
 
 /**
  * Interface for a Surface. A Surface defines
@@ -51,6 +52,13 @@ public:
 		Vector norm;
 		return intersects(start, dir, location, norm);
 	}
+
+	/**
+	 * Return bounding box for this Surface.
+	 * Used for optimization purposes.
+	 * \return The bounding box of this surface.
+	 */
+	virtual AABBox bounding_box() = 0;
 };
 
 #endif

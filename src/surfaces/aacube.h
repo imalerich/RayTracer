@@ -8,6 +8,7 @@ public:
 	AACube(Vector Min, Vector Max);
 	friend ostream& operator<<(ostream &os, const AACube &AACube);
 
+	virtual AABBox bounding_box();
 	virtual bool intersects(Vector start, Vector dir, Vector &location, Vector &normal);
 	
 	virtual bool intersects(Vector start, Vector dir) {

@@ -52,3 +52,8 @@ bool Sphere::intersects(Vector start, Vector dir, Vector &location, Vector &norm
 		}
 	}
 }
+
+AABBox Sphere::bounding_box() {
+	auto r = Vector(radius, radius, radius);
+	return AABBox(center - r, center + r);
+}

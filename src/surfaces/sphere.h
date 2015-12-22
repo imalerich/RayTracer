@@ -17,6 +17,7 @@ public:
 	Sphere(Vector Center, double Radius);
 	friend ostream& operator<<(ostream &os, const  Sphere &sphere);
 
+	virtual AABBox bounding_box();
 	virtual bool intersects(Vector start, Vector dir, Vector &location, Vector &normal);
 	
 	virtual bool intersects(Vector start, Vector dir) {

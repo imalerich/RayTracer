@@ -36,6 +36,8 @@ add_executable(RayTracer
 	src/camera.cpp
 
 	src/math/vector.cpp
+	src/math/aabbox.cpp
+	src/math/octree.cpp
 
 	src/lights/pointlight.cpp
 	src/lights/dirlight.cpp

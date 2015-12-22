@@ -58,3 +58,7 @@ bool AACube::intersects(Vector start, Vector dir, Vector &location, Vector &norm
 
 	return (max_delta - min_delta > -epsilon) && (min_delta > -epsilon);
 }
+
+AABBox AACube::bounding_box() {
+	return AABBox(min, max);
+}

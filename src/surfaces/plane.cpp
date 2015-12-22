@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 #include "plane.h"
 
@@ -30,4 +31,9 @@ bool Plane::intersects(Vector start, Vector dir, Vector &location, Vector &norma
 
 	location = start + dir * d;
 	return !(location == start);
+}
+
+AABBox Plane::bounding_box() {
+	return AABBox(Vector(-DBL_MAX, -DBL_MAX, -DBL_MAX), 
+			Vector(DBL_MAX, DBL_MAX, DBL_MAX));
 }

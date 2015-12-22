@@ -19,9 +19,10 @@ const static unsigned reflections = 3;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 3;
+	auto count = 5;
 	auto i = 10;
 	auto depth = 3;
+
 	for (; i < 10 + depth * 2; i += 2) {
 		for (auto x = 0; x < count; x++) {
 			for (auto y = 0; y < count; y++) {
@@ -38,12 +39,19 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	}
 
 	// add some sample lights
-	//lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
-	//lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
+	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
+	lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
 	lights.push_back(new PointLight(Vector(-3.0, 2.0, 0.0), 1.0, 30.0));
+
+	scene = new Octree(Vector(), 50.0, 5);
+	for (auto s : surfaces) {
+		scene->add_item(s->bounding_box(), (void *)s);
+	}
 }
 
 RayTracer::~RayTracer() {
+	delete scene;
+
 	for (auto s : surfaces) {
 		delete s;
 	}
@@ -86,12 +94,17 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 	Vector intersect;
 
 	auto dist = DBL_MAX;
-	auto drawn = false;
 
 	Surface * hit = nullptr;
 	Vector hit_i, hit_n;
 
+	//vector<void *> fsurfaces;
+	//scene->filter_by_ray(start, dir, fsurfaces);
+
+	// find the nearest surface
 	for (auto s : surfaces) {
+		//auto s = (Surface *)f;
+
 		if (s->intersects(start, dir, intersect, norm)) {
 			// make sure this point is closer than the last renedered point
 			if (intersect.magnitude() > dist) {
@@ -104,60 +117,52 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 
 				dist = intersect.magnitude();
 			}
-
-			auto l_val = 0.2; // ambient
-
-			for (auto l : lights) {
-				Vector dir = l->direction_from_point(intersect);
-				auto light = true;
-
-				// check if a shadow hits this surface
-				for (auto k : surfaces) {
-					if (k->intersects(intersect, dir)) {
-						light = false;
-						break;
-					}
-				}
-
-				if (light) {
-					l_val += l->scalar_for_point(intersect, norm);
-				}
-			}
-
-			auto specular = 0.0;
-			for (auto l : lights) {
-				Vector l_dir = l->direction_from_point(intersect);
-				auto light = true;
-				
-				// check if this light is visible
-				for (auto k : surfaces) {
-					if (k->intersects(intersect, l_dir)) {
-						light = false;
-						break;
-					}
-				}
-
-				if (light) {
-					norm.normalize();
-
-					auto reflect = 2.0 * l_dir.dot(norm);
-					Vector p_dir = l_dir - norm * reflect;
-					auto phong = max(p_dir.dot(dir), 0.0);
-					specular += pow(phong, 32);
-				}
-			}
-
-			l_val = min(l_val, 1.0);
-			specular = max(specular, 1.0);
-
-			color = (s->diffuse * l_val) * specular;
-			drawn = true;
-
-		} else if (!drawn) {
-			color = Vector(1.0, 1.0, 1.0);
 		}
 	}
 
+	// if no hit was made
+	if (!hit) {
+		return Vector(1.0, 1.0, 1.0);
+	}
+
+	// calculate the lighting for the hit surface
+	auto l_val = 0.2;
+	auto specular = 0.0;
+
+	for (auto l : lights) {
+		Vector l_dir = l->direction_from_point(hit_i);
+		auto light = true;
+
+		// check if a shadow hits this surface
+		//fsurfaces.clear();
+		//scene->filter_by_ray(hit_i, l_dir, fsurfaces);
+
+		for (auto k : surfaces) {
+			//auto k = (Surface *)f;
+
+			if (k->intersects(hit_i, l_dir)) {
+				light = false;
+				break;
+			}
+		}
+
+		if (light) {
+			hit_n.normalize();
+			l_val += l->scalar_for_point(hit_i, hit_n);
+
+			auto reflect = 2.0 * l_dir.dot(hit_n);
+			Vector p_dir = l_dir - hit_n * reflect;
+			auto phong = max(p_dir.dot(dir), 0.0);
+			specular += pow(phong, 32);
+		}
+	}
+
+	l_val = min(l_val, 1.0);
+	specular = max(specular, 1.0);
+
+	color = (hit->diffuse * l_val) * specular;
+
+	// recurse through reflection
 	if (hit && hit->reflection > 0.0 && limit) {
 		double reflect = 2.0 * dir.dot(hit_n);
 		Vector r = color_for_ray(hit_i, dir - hit_n * reflect, limit - 1);
