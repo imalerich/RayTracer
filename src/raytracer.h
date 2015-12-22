@@ -5,7 +5,6 @@
 
 #include "camera.h"
 
-#include "math/octree.h"
 #include "math/vector.h"
 
 #include "surfaces/surface.h"
@@ -50,7 +49,6 @@ private:
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
 	unsigned pixels_rendered;
 
-	Octree * scene;
 	vector<Surface *> surfaces;
 	vector<Light *> lights;
 };

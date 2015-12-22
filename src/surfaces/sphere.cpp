@@ -6,10 +6,8 @@
 
 using namespace std;
 
-Sphere::Sphere() : radius{1.0} { }
-
-Sphere::Sphere(Vector Center, double Radius) : 
-	center{Center}, radius{Radius} { }
+Sphere::Sphere(Material Mat, Vector Center, double Radius) : 
+	Surface(Mat), center{Center}, radius{Radius} { }
 
 ostream& operator<<(ostream &os, const  Sphere &sphere) {
 	os << "(Center: " << sphere.center << ", Radius: " << sphere.radius << ")";

@@ -15,11 +15,11 @@ class DirLight : public Light {
 public:
 	DirLight(Vector Dir, double Intensity);
 
-	virtual Vector direction_from_point(Vector point);
-	virtual double scalar_for_point(Vector point, Vector normal);
+	virtual Vector direction_from_point(Vector point, int sample);
+	virtual double scalar_for_point(Vector point, Vector normal, Vector dir);
 
 private:
-	double intensity;
+	const double intensity;
 	Vector dir;
 };
 

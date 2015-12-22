@@ -5,7 +5,7 @@
 
 class AACube : public Surface {
 public:
-	AACube(Vector Min, Vector Max);
+	AACube(Material Mat, Vector Min, Vector Max);
 	friend ostream& operator<<(ostream &os, const AACube &AACube);
 
 	virtual AABBox bounding_box();

@@ -3,6 +3,7 @@
 
 #include "../math/vector.h"
 #include "../math/aabbox.h"
+#include "../material.h"
 
 /**
  * Interface for a Surface. A Surface defines
@@ -13,10 +14,10 @@
  */
 class Surface {
 public:
+	Surface(Material Mat) : mat{Mat} { }
 	virtual ~Surface() { }
 
-	Vector diffuse; /**< Diffuse color of the surface. */
-	double reflection; /**< Reflection index of the surface. */
+	Material mat; /**< Material used to render the current surface. */
 
 	/**
 	 * Determins whether or not this Surface intersects the input

@@ -3,18 +3,17 @@
 PointLight::PointLight(Vector Pos, double Intensity, double Range) : 
 	intensity{Intensity}, range{Range}, pos{Pos} { }
 
-Vector PointLight::direction_from_point(Vector point) {
+Vector PointLight::direction_from_point(Vector point, int sample) {
 	Vector dir = pos - point;
 	dir.normalize();
 	return dir;
 }
 
-double PointLight::scalar_for_point(Vector point, Vector normal) {
+double PointLight::scalar_for_point(Vector point, Vector normal, Vector dir) {
 	if (range == 0.0) {
 		return 0.0;
 	}
 
-	auto dir = direction_from_point(point);
 	auto dist = dir.magnitude();
 
 	normal.normalize();

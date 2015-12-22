@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <assert.h>
 #include <float.h>
+
 #include "octree.h"
 
 Octree::Octree(Vector Origin, double Width, unsigned MaxDepth) :
@@ -53,9 +55,7 @@ AABBox Octree::bbox_for_octant(Octant i) const {
 	auto min = Vector(-DBL_MAX, -DBL_MAX, -DBL_MAX);
 	auto max = Vector(DBL_MAX, DBL_MAX, DBL_MAX);
 
-	if (i < 0 || i >= OCT_CHILDREN) {
-		throw invalid_argument("Octree::bbox_for_octant()");
-	}
+	assert(i > 0 && i < OCT_CHILDREN);
 
 	if (i < OCT_BOT_UPPER_RIGHT) {
 		min.z = origin.z;
@@ -76,11 +76,11 @@ AABBox Octree::bbox_for_octant(Octant i) const {
 
 	if (i == OCT_TOP_UPPER_RIGHT || i == OCT_TOP_LOWER_RIGHT ||
 			i == OCT_BOT_UPPER_RIGHT || i == OCT_BOT_LOWER_RIGHT) {
-		min.z = origin.z;
-		max.z = origin.z + half_width;
+		min.x = origin.x;
+		max.x = origin.x + half_width;
 	} else {
-		max.z = origin.z;
-		min.z = max.z - half_width;
+		max.x = origin.x;
+		min.x = max.z - half_width;
 	}
 
 	return AABBox(min, max);

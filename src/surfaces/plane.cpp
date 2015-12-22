@@ -5,8 +5,8 @@
 
 #include "plane.h"
 
-Plane::Plane(Vector Coord, Vector Norm) :
-	coord{Coord}, norm{Norm} { }
+Plane::Plane(Material Mat, Vector Coord, Vector Norm) :
+	Surface(Mat), coord{Coord}, norm{Norm} { }
 
 ostream& operator<<(ostream &os, const Plane &plane) {
 	os << "(Coord: " << plane.coord << ", Normal: " << plane.norm << ")";

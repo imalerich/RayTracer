@@ -11,7 +11,7 @@
  */
 class Plane : public Surface {
 public:
-	Plane(Vector Coord, Vector Norm);
+	Plane(Material Mat, Vector Coord, Vector Norm);
 	friend ostream& operator<<(ostream &os, const Plane &plane);
 
 	virtual AABBox bounding_box();

@@ -13,8 +13,7 @@ using namespace std;
  */
 class Sphere : public Surface {
 public:
-	Sphere();
-	Sphere(Vector Center, double Radius);
+	Sphere(Material mat, Vector Center, double Radius);
 	friend ostream& operator<<(ostream &os, const  Sphere &sphere);
 
 	virtual AABBox bounding_box();

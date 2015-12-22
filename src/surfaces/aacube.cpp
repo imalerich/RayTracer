@@ -1,15 +1,14 @@
-#include <exception>
 #include <algorithm>
 #include <float.h>
+#include <assert.h>
+
 #include "aacube.h"
 
 using namespace std;
 
-AACube::AACube(Vector Min, Vector Max) :
-		min{Min}, max{Max} {
-	if (min > max) {
-		throw invalid_argument("AACube::AACube() - invalid min/max");
-	}
+AACube::AACube(Material Mat, Vector Min, Vector Max) :
+		Surface(Mat), min{Min}, max{Max} {
+	assert(!(min > max));
 }
 
 ostream& operator<<(ostream &os, const AACube &cube) {

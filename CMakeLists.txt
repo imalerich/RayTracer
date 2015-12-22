@@ -41,6 +41,7 @@ add_executable(RayTracer
 
 	src/lights/pointlight.cpp
 	src/lights/dirlight.cpp
+	src/lights/balllight.cpp
 
 	src/surfaces/sphere.cpp
 	src/surfaces/plane.cpp

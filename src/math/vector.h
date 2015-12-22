@@ -31,6 +31,19 @@ public:
 	static Vector max(const Vector &a, const Vector &b);
 
 	/**
+	 * Generates a random unit vector.
+	 */
+	static Vector rand_vec() {
+		auto rx = ((rand() % 1000000) / 1000000.0) - 0.5;
+		auto ry = ((rand() % 1000000) / 1000000.0) - 0.5;
+		auto rz = ((rand() % 1000000) / 1000000.0) - 0.5;
+
+		Vector r(rx, ry, rz);
+		r.normalize();
+		return r;
+	}
+
+	/**
 	 * \return The magnitude of thie Vector.
 	 */
 	inline double magnitude() const {

@@ -14,13 +14,13 @@ class PointLight : public Light {
 public:
 	PointLight(Vector Pos, double Intensity, double Range);
 
-	virtual Vector direction_from_point(Vector point);
-	virtual double scalar_for_point(Vector point, Vector normal);
+	virtual Vector direction_from_point(Vector point, int sample);
+	virtual double scalar_for_point(Vector point, Vector normal, Vector dir);
 
-private:
-	double intensity;
-	double range;
-	Vector pos;
+protected:
+	const double intensity;
+	const double range;
+	const Vector pos;
 };
 
 #endif

@@ -11,47 +11,38 @@
 
 #include "lights/pointlight.h"
 #include "lights/dirlight.h"
+#include "lights/balllight.h"
 
 using namespace std;
 
-const static unsigned reflections = 3;
+const static unsigned reflections = 2;
 
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 5;
+	auto count = 3;
 	auto i = 10;
-	auto depth = 3;
+	auto depth = 0;
 
-	for (; i < 10 + depth * 2; i += 2) {
+	//for (; i < 10 + depth * 3; i += 3) {
 		for (auto x = 0; x < count; x++) {
 			for (auto y = 0; y < count; y++) {
-				auto x_coord = (x * 2.0 - count + 1);
-				auto y_coord = (y * 2.0 - count + 1);
-				surfaces.push_back(new Sphere(Vector(x_coord, (double)i, y_coord), 1.0));
+				auto x_coord = (x * 3.0 - 1.5 * count + 1.5);
+				auto y_coord = (y * 3.0 - 1.5 * count + 1.5);
+				surfaces.push_back(new Sphere(Material::rand_mat(), 
+					Vector(x_coord, (double)i, y_coord), 1.0));
 			}
 		}
-	}
+	//}
 
-	for (auto s : surfaces) {
-		s->diffuse = Vector((rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0, (rand() % 1000) / 1000.0);
-		s->reflection = (rand() % 800) / 1000.0;
-	}
+	Material plane_mat(Vector(95/255, 91/255.0, 107/255.0), 0.0, 0.0, 0.0, 0.0);
+	surfaces.push_back(new Plane(plane_mat, Vector(0.0, i, 0.0), Vector(0.0, -1.0, 0.0)));
 
-	// add some sample lights
-	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
-	lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
-	lights.push_back(new PointLight(Vector(-3.0, 2.0, 0.0), 1.0, 30.0));
-
-	scene = new Octree(Vector(), 50.0, 5);
-	for (auto s : surfaces) {
-		scene->add_item(s->bounding_box(), (void *)s);
-	}
+	lights.push_back(new BallLight(Vector(-3.0, 8.5, 0.0), 1.0, 1.0, 30.0));
+	//lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
 }
 
 RayTracer::~RayTracer() {
-	delete scene;
-
 	for (auto s : surfaces) {
 		delete s;
 	}
@@ -98,12 +89,8 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 	Surface * hit = nullptr;
 	Vector hit_i, hit_n;
 
-	//vector<void *> fsurfaces;
-	//scene->filter_by_ray(start, dir, fsurfaces);
-
 	// find the nearest surface
 	for (auto s : surfaces) {
-		//auto s = (Surface *)f;
 
 		if (s->intersects(start, dir, intersect, norm)) {
 			// make sure this point is closer than the last renedered point
@@ -129,44 +116,45 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 	auto l_val = 0.2;
 	auto specular = 0.0;
 
+	// loop through each contributing light
 	for (auto l : lights) {
-		Vector l_dir = l->direction_from_point(hit_i);
-		auto light = true;
+		auto num_samples = l->num_samples();
 
-		// check if a shadow hits this surface
-		//fsurfaces.clear();
-		//scene->filter_by_ray(hit_i, l_dir, fsurfaces);
+		// take l->num_samples() from each light
+		for (auto sample = 0u; sample < num_samples; sample++) {
+			Vector l_dir = l->direction_from_point(hit_i, 0);
+			auto light = true;
 
-		for (auto k : surfaces) {
-			//auto k = (Surface *)f;
-
-			if (k->intersects(hit_i, l_dir)) {
-				light = false;
-				break;
+			// check if a shadow hits this surface
+			for (auto s : surfaces) {
+				if (s->intersects(hit_i, l_dir)) {
+					light = false;
+					break;
+				}
 			}
-		}
 
-		if (light) {
-			hit_n.normalize();
-			l_val += l->scalar_for_point(hit_i, hit_n);
+			if (light) {
+				hit_n.normalize();
+				l_val += l->scalar_for_point(hit_i, hit_n, l_dir) / num_samples;
 
-			auto reflect = 2.0 * l_dir.dot(hit_n);
-			Vector p_dir = l_dir - hit_n * reflect;
-			auto phong = max(p_dir.dot(dir), 0.0);
-			specular += pow(phong, 32);
+				auto reflect = 2.0 * l_dir.dot(hit_n);
+				Vector p_dir = l_dir - hit_n * reflect;
+				auto phong = max(p_dir.dot(dir), 0.0);
+				specular += hit->mat.spec_scalar * pow(phong, hit->mat.spec_pow) / num_samples;
+			}
 		}
 	}
 
 	l_val = min(l_val, 1.0);
 	specular = max(specular, 1.0);
 
-	color = (hit->diffuse * l_val) * specular;
+	color = (hit->mat.diffuse * l_val) * specular;
 
 	// recurse through reflection
-	if (hit && hit->reflection > 0.0 && limit) {
+	if (hit && hit->mat.reflect > 0.0 && limit) {
 		double reflect = 2.0 * dir.dot(hit_n);
 		Vector r = color_for_ray(hit_i, dir - hit_n * reflect, limit - 1);
-		return (r * hit->reflection) + (color * (1.0 - hit->reflection));
+		return (r * hit->mat.reflect) + (color * (1.0 - hit->mat.reflect));
 	}
 
 	return color;

@@ -1,13 +1,12 @@
-#include <exception>
 #include <algorithm>
+#include <assert.h>
 #include <float.h>
+
 #include "aabbox.h"
 
 AABBox::AABBox(Vector Min, Vector Max) :
 		min{Min}, max{Max} {
-	if (min > max) {
-		throw invalid_argument("AACube::AACube() - invalid min/max");
-	}
+	assert(!(min > max));
 }
 
 bool AABBox::contains(const AABBox &other) {
