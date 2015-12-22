@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdlib.h>
+#include <assert.h>
 #include <math.h>
 
 using namespace std;
@@ -37,6 +38,10 @@ public:
 		auto rx = ((rand() % 1000000) / 1000000.0) - 0.5;
 		auto ry = ((rand() % 1000000) / 1000000.0) - 0.5;
 		auto rz = ((rand() % 1000000) / 1000000.0) - 0.5;
+
+		assert(rx >= -0.5 && rx <= 0.5);
+		assert(ry >= -0.5 && ry <= 0.5);
+		assert(rz >= -0.5 && rz <= 0.5);
 
 		Vector r(rx, ry, rz);
 		r.normalize();

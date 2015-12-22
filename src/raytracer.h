@@ -43,7 +43,31 @@ private:
 	 */
 	void render_point(unsigned x, unsigned y, Pixel * pixels);
 
+	/**
+	 * Shoots a ray from 'start' in the direction of dir that will recursively 
+	 * calculate the color represented by the ray. The recursion is limited
+	 * by the input 'limit'.
+	 * \param start Start coordinate of the ray.
+	 * \param dir Direction vector of the ray.
+	 * \param limit Recursion limit for reflection and refractions.
+	 * \return Vector representation of the color.
+	 */
 	Vector color_for_ray(Vector start, Vector dir, int limit);
+
+
+	/**
+	 * Corrects for exposure given the input exposure value.
+	 * \param pixels Pixels array to correct.
+	 * \param exposure Exposure index to use for the correction.
+	 */
+	void correct_exposure(float * pixels, float exposure);
+
+	/**
+	 * Encodes the input pixels array in srgb format.
+	 * \param pixels Array of floating point values, where a set
+	 * 	of three represents a single pixel.
+	 */
+	void encode_srgb(float * pixels);
 
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */

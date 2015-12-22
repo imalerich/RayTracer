@@ -14,17 +14,18 @@ public:
 	 * Generates a random Material.
 	 */
 	static inline Material rand_mat() {
-		auto diffuse = Vector();
-		for (auto i = 0; i < 3; i++) {
-			diffuse[i] = (rand() % 1000) / 1000.0;
-		}
-
+		auto diffuse = Vector::rand_vec() + Vector(0.5, 0.5, 0.5);
 		auto spec_scalar = (rand() % 1000) / 1000.0;
 		auto spec_pow = (rand() % 32);
 		auto reflect = (rand() % 1000) / 1000.0;
 		auto refract = (rand() % 1000) / 1000.0;
 
-		return Material(diffuse, spec_scalar, spec_pow, reflect, refract);
+		assert(spec_pow >= 0.0);
+		assert(reflect <= 1.0 && reflect >= 0.0);
+		assert(refract <= 1.0 && refract >= 0.0);
+		assert(spec_scalar <= 1.0 && spec_scalar >= 0.0);
+
+		return Material(diffuse, spec_scalar, spec_pow, pow(reflect, 2), pow(refract, 2));
 	}
 
 	const Vector diffuse; /**< Diffuse color. */
