@@ -6,7 +6,7 @@ BallLight::BallLight(Vector Pos, double Radius, double Intensity, double Range) 
 	PointLight(Pos, Intensity, Range), radius{Radius} { }
 
 unsigned BallLight::num_samples() {
-	return 256;
+	return 128;
 }
 
 Vector BallLight::direction_from_point(Vector point, int sample) {

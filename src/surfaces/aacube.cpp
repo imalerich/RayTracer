@@ -6,6 +6,13 @@
 
 using namespace std;
 
+AACube::AACube(Material Mat, Vector coord, double width) : 
+		Surface(Mat) {
+	Vector half_width(width/2.0, width/2.0, width/2.0);
+	min = Vector(coord - half_width);
+	max = Vector(coord + half_width);
+}
+
 AACube::AACube(Material Mat, Vector Min, Vector Max) :
 		Surface(Mat), min{Min}, max{Max} {
 	assert(!(min > max));

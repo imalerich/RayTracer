@@ -19,6 +19,10 @@
 
 typedef int Octant;
 
+/**
+ * Recursive Octree container for
+ * visibility determination.
+ */
 class Octree {
 public:
 	Octree(Vector Origin, double Width, unsigned MaxDepth);

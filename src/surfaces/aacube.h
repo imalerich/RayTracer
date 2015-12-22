@@ -3,8 +3,14 @@
 
 #include "surface.h"
 
+/**
+ * Axis-Aligned cube surface.
+ * This surface is defined exclusively
+ * by it's minimum and maximum coordinates.
+ */
 class AACube : public Surface {
 public:
+	AACube(Material Mat, Vector coord, double width);
 	AACube(Material Mat, Vector Min, Vector Max);
 	friend ostream& operator<<(ostream &os, const AACube &AACube);
 

@@ -22,9 +22,9 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	// add some sample surfaces
 	auto count = 3;
 	auto i = 10;
-	auto depth = 0;
+	auto depth = 3;
 
-	//for (; i < 10 + depth * 3; i += 3) {
+	for (; i < 10 + depth * 3; i += 3) {
 		for (auto x = 0; x < count; x++) {
 			for (auto y = 0; y < count; y++) {
 				auto x_coord = (x * 3.0 - 1.5 * count + 1.5);
@@ -33,13 +33,13 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 					Vector(x_coord, (double)i, y_coord), 1.0));
 			}
 		}
-	//}
+	}
 
 	Material plane_mat(Vector(95/255, 91/255.0, 107/255.0), 0.0, 0.0, 0.0, 0.0);
-	surfaces.push_back(new Plane(plane_mat, Vector(0.0, i, 0.0), Vector(0.0, -1.0, 0.0)));
+	surfaces.push_back(new Plane(plane_mat, Vector(0.0, i - 2, 0.0), Vector(0.0, -1.0, 0.0)));
 
 	lights.push_back(new BallLight(Vector(-3.0, 8.5, 0.0), 1.0, 1.0, 30.0));
-	//lights.push_back(new PointLight(Vector( 3.0, 8.5, 0.0), 1.0, 30.0));
+	//lights.push_back(new BallLight(Vector( 3.0, 8.5, 0.0), 1.0, 1.0, 30.0));
 }
 
 RayTracer::~RayTracer() {

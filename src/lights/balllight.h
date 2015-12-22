@@ -3,6 +3,12 @@
 
 #include "pointlight.h"
 
+/**
+ * Volumetric Ball Light.
+ * Will average a number of samples from rays
+ * going to random directions on this volumes
+ * surface.
+ */
 class BallLight : public PointLight {
 public:
 	BallLight(Vector Pos, double Radius, double Intensity, double Range);
