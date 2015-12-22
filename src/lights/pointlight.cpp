@@ -14,7 +14,7 @@ double PointLight::scalar_for_point(Vector point, Vector normal, Vector dir) {
 		return 0.0;
 	}
 
-	auto dist = dir.magnitude();
+	auto dist = (pos - point).magnitude();
 
 	normal.normalize();
 	dir.normalize();

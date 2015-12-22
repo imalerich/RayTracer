@@ -62,13 +62,6 @@ private:
 	 */
 	void correct_exposure(float * pixels, float exposure);
 
-	/**
-	 * Encodes the input pixels array in srgb format.
-	 * \param pixels Array of floating point values, where a set
-	 * 	of three represents a single pixel.
-	 */
-	void encode_srgb(float * pixels);
-
 	const unsigned screen_w; /**< The width (in pixels) of the image to be rendered. */
 	const unsigned screen_h; /**< The height (in pixels) of the image to be rendered. */
 	unsigned pixels_rendered;

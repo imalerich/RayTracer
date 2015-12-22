@@ -1,11 +1,10 @@
 #include "prefix.h"
 
 #define _USE_MATH_DEFINES
-
+#include <math.h>
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 #include <time.h>
 #include <SOIL.h>
 

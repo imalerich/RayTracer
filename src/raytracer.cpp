@@ -20,7 +20,7 @@ const static unsigned reflections = 0;
 RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H) 
 		: screen_w{Screen_W}, screen_h{Screen_H} { 
 	// add some sample surfaces
-	auto count = 2;
+	auto count = 3;
 	auto i = 10;
 	auto depth = 1;
 
@@ -38,8 +38,8 @@ RayTracer::RayTracer(unsigned Screen_W, unsigned Screen_H)
 	Material plane_mat(Vector(95/255, 91/255.0, 107/255.0), 0.0, 0.0, 0.0, 0.0);
 	surfaces.push_back(new Plane(plane_mat, Vector(0.0, i - 2, 0.0), Vector(0.0, -1.0, 0.0)));
 	
-	lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
-	//lights.push_back(new BallLight(Vector(-3.0, 8.5, 0.0), 0.5, 1.0, 30.0));
+	//lights.push_back(new PointLight(Vector(-3.0, 8.5, 0.0), 1.0, 30.0));
+	lights.push_back(new BallLight(Vector(-5.0, 8.5, 0.0), 0.5, 1.0, 12.0));
 	//lights.push_back(new BallLight(Vector( 3.0, 8.5, 0.0), 1.0, 1.0, 30.0));
 }
 
@@ -64,8 +64,7 @@ float * RayTracer::render_scene() {
 		}
 	}
 
-	correct_exposure((float *)pixels, -1.0);
-	encode_srgb((float *)pixels);
+	//correct_exposure((float *)pixels, -1.0);
 	return (float *)pixels;
 }
 
@@ -73,17 +72,6 @@ void RayTracer::correct_exposure(float * pixels, float exposure) {
 	for (auto i=0u; i < screen_h * screen_w * 3; i++) {
 		auto &c = pixels[i];
 		c = 1.0 - exp(c * exposure);
-	}
-}
-
-void RayTracer::encode_srgb(float * pixels) {
-	for (auto i=0u; i < screen_h * screen_w * 3; i++) {
-		auto &c = pixels[i];
-		if (c < 0.0031308) {
-			c = 12.92 * c;
-		} else {
-			c = 1.055 * pow(c, 0.4166667) - 0.554;
-		}
 	}
 }
 
@@ -134,7 +122,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 	}
 
 	// calculate the lighting for the hit surface
-	auto l_val = 0.3;
+	auto l_val = 0.0;
 	auto specular = 0.0;
 
 	// loop through each contributing light
@@ -174,7 +162,7 @@ Vector RayTracer::color_for_ray(Vector start, Vector dir, int limit) {
 		}
 	}
 
-	l_val = min(l_val, 1.0);
+	l_val = max(min(l_val, 1.0), 0.0);
 	specular = max(specular * l_val, 0.0);
 
 	color = (hit->mat.diffuse * l_val) + Vector(1.0, 1.0, 1.0) * specular;
