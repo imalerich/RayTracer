@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <SOIL.h>
+// #include <SOIL.h>
 
 #include "glutil.h"
 #include "raytracer.h"
@@ -131,9 +131,9 @@ int main() {
 			glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 
-		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			SOIL_save_screenshot("../scrot.bmp", SOIL_SAVE_TYPE_BMP, 0, 0, SCREENW, SCREENH);
-		}
+// 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+// 			SOIL_save_screenshot("../scrot.bmp", SOIL_SAVE_TYPE_BMP, 0, 0, SCREENW, SCREENH);
+// 		}
 	}
 
 	// terminate glfw
